@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, RefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-export function Crosshair({ containerRef }: { containerRef: RefObject<HTMLElement | null> }) {
+export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTMLElement | null> }) {
   const cursorRef = useRef<HTMLDivElement>(null);
   const lineHorizontalRef = useRef<HTMLDivElement>(null);
   const lineVerticalRef = useRef<HTMLDivElement>(null);
