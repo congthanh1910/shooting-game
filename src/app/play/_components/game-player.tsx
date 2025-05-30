@@ -2,8 +2,8 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { Crosshair } from '@/components/crosshair';
-import { useQueryTarget } from '@/hooks/use-query-target';
 
 export function GamePlayer() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +16,8 @@ export function GamePlayer() {
 }
 
 function Target() {
-  const [url] = useQueryTarget();
+  const params = useSearchParams();
+  const url = params.get('target') || '/tom-no-bg.png';
   const [isShooted, setShooted] = useState(false);
   const [count, setCount] = useState(0);
   if (isShooted)
