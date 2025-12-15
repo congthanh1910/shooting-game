@@ -1,50 +1,82 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import type { Nullable } from "@/types/utils";
 
-export function RandomElement({
+export function RandomTarget({
   containerRef,
+  onClean,
+  zIndex,
 }: {
-  containerRef: React.RefObject<HTMLElement | null>;
+  containerRef: React.RefObject<Nullable<HTMLElement>>;
+  onClean: VoidFunction;
+  zIndex: number;
 }) {
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const url = useTargetUrl();
+
+  const [position, setPosition] = useState<Nullable<Position>>(null);
+
+  const [isShooted, setShooted] = useState(false);
+  const [timestamp] = useState(() => Date.now());
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    const rect = container.getBoundingClientRect();
-
-    const maxLeft = rect.width - 100; // 100 is element width
-    const maxTop = rect.height - 100; // 100 is element height
-
-    const left = Math.floor(Math.random() * maxLeft);
-    const top = Math.floor(Math.random() * maxTop);
-
-    setPosition({ top, left });
+    setPosition(calcPosition(container.getBoundingClientRect()));
   }, [containerRef]);
 
-  if (position.top === 0) {
-    return null;
-  }
+  if (!position) return null;
+
+  if (isShooted)
+    return (
+      <Image
+        key="explosion"
+        src={"/explosion.gif?t=" + timestamp}
+        alt="explosion"
+        {...elementSize}
+        className="absolute"
+        style={{ ...position, zIndex }}
+      />
+    );
 
   return (
     <div
-      style={{
-        top: position.top,
-        left: position.left,
-        width: 100,
-        height: 100,
-        backgroundColor: 'tomato',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '8px',
-      }}
-      className="absolute"
+      className="absolute grid items-center justify-center bg-transparent"
+      style={{ ...elementSize, ...position, zIndex }}
     >
-      Random Box
+      <Image
+        key="target"
+        src={url}
+        alt="target"
+        width={160}
+        height={160}
+        className="rounded-full"
+        priority
+        onClick={() => {
+          setShooted(true);
+          setTimeout(onClean, 500);
+        }}
+        onDragStart={(event) => event.preventDefault()}
+      />
     </div>
   );
 }
+
+function useTargetUrl() {
+  const params = useSearchParams();
+  return params.get("target") || "/tom-no-bg.png";
+}
+
+const elementSize = { width: 400, height: 400 };
+
+function calcPosition(containerRect: DOMRect): Position {
+  const leftMax = containerRect.width - elementSize.width;
+  const topMax = containerRect.height - elementSize.height;
+  return {
+    left: Math.floor(Math.random() * leftMax),
+    top: Math.floor(Math.random() * topMax),
+  };
+}
+type Position = { left: number; top: number };

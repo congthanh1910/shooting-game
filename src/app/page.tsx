@@ -1,11 +1,11 @@
-import { GameName } from './_components/game-name';
-import { StarterScreen } from './_components/starter-screen';
+import { GameName } from "@/components/game-name";
+import { StarterScreen } from "@/components/starter-screen";
 
 export default function Page() {
   return (
     <main className="grid h-screen items-center justify-center">
       <div>
-        <div className="h-[110px]">
+        <div className="h-27.5">
           <GameName />
         </div>
         <StarterScreen />

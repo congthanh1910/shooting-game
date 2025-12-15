@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function GameName({
-  fontSize = 'clamp(2rem, 8vw, 8rem)',
+  fontSize = "clamp(2rem, 8vw, 8rem)",
   enableHover = true,
 }: {
   fontSize?: number | string;
@@ -23,18 +23,18 @@ export function GameName({
       }
       if (isCancelled) return;
 
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      const computedFontFamily = window.getComputedStyle(canvas).fontFamily || 'sans-serif';
+      const computedFontFamily = window.getComputedStyle(canvas).fontFamily || "sans-serif";
 
-      const fontSizeStr = typeof fontSize === 'number' ? `${fontSize}px` : fontSize;
+      const fontSizeStr = typeof fontSize === "number" ? `${fontSize}px` : fontSize;
       let numericFontSize: number;
 
-      if (typeof fontSize === 'number') {
+      if (typeof fontSize === "number") {
         numericFontSize = fontSize;
       } else {
-        const temp = document.createElement('span');
+        const temp = document.createElement("span");
         temp.style.fontSize = fontSize;
         document.body.appendChild(temp);
         const computedSize = window.getComputedStyle(temp).fontSize;
@@ -42,16 +42,16 @@ export function GameName({
         document.body.removeChild(temp);
       }
 
-      const text = 'Shooting game';
+      const text = "Shooting game";
 
-      const offscreen = document.createElement('canvas'),
-        offCtx = offscreen.getContext('2d');
+      const offscreen = document.createElement("canvas"),
+        offCtx = offscreen.getContext("2d");
       if (!offCtx) return;
 
       const fontWeight = 900;
 
       offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
-      offCtx.textBaseline = 'alphabetic';
+      offCtx.textBaseline = "alphabetic";
       const metrics = offCtx.measureText(text);
 
       const actualLeft = metrics.actualBoundingBoxLeft ?? 0,
@@ -70,8 +70,8 @@ export function GameName({
 
       const xOffset = extraWidthBuffer / 2;
       offCtx.font = `${fontWeight} ${fontSizeStr} ${computedFontFamily}`;
-      offCtx.textBaseline = 'alphabetic';
-      offCtx.fillStyle = '#ffffff';
+      offCtx.textBaseline = "alphabetic";
+      offCtx.fillStyle = "#ffffff";
       offCtx.fillText(text, xOffset - actualLeft, actualAscent);
 
       const horizontalMargin = 50,
@@ -141,19 +141,19 @@ export function GameName({
       };
 
       if (enableHover) {
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseleave', handleMouseLeave);
-        canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-        canvas.addEventListener('touchend', handleTouchEnd);
+        canvas.addEventListener("mousemove", handleMouseMove);
+        canvas.addEventListener("mouseleave", handleMouseLeave);
+        canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+        canvas.addEventListener("touchend", handleTouchEnd);
       }
 
       const cleanup = () => {
         window.cancelAnimationFrame(animationFrameId);
         if (enableHover) {
-          canvas.removeEventListener('mousemove', handleMouseMove);
-          canvas.removeEventListener('mouseleave', handleMouseLeave);
-          canvas.removeEventListener('touchmove', handleTouchMove);
-          canvas.removeEventListener('touchend', handleTouchEnd);
+          canvas.removeEventListener("mousemove", handleMouseMove);
+          canvas.removeEventListener("mouseleave", handleMouseLeave);
+          canvas.removeEventListener("touchmove", handleTouchMove);
+          canvas.removeEventListener("touchend", handleTouchEnd);
         }
       };
 

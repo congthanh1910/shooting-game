@@ -1,8 +1,9 @@
-/** @type {import("prettier").Config} */
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
 const config = {
   printWidth: 100,
-  arrowParens: "avoid",
-  singleQuote: true,
   plugins: ["prettier-plugin-tailwindcss"],
   tailwindFunctions: ["cn"],
 };

@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTMLElement | null> }) {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTML
 
     const target = containerRef.current;
 
-    target.addEventListener('mousemove', handleMouseMove);
+    target.addEventListener("mousemove", handleMouseMove);
 
     const renderedStyles: Record<string, { previous: number; current: number; amt: number }> = {
       tx: { previous: 0, current: 0, amt: 0.15 },
@@ -50,16 +50,16 @@ export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTML
 
       gsap.to([lineHorizontalRef.current, lineVerticalRef.current].filter(Boolean), {
         duration: 0.9,
-        ease: 'Power3.easeOut',
+        ease: "Power3.easeOut",
         opacity: 1,
       });
 
       requestAnimationFrame(render);
 
-      target.removeEventListener('mousemove', onMouseMove);
+      target.removeEventListener("mousemove", onMouseMove);
     };
 
-    target.addEventListener('mousemove', onMouseMove);
+    target.addEventListener("mousemove", onMouseMove);
 
     const primitiveValues = { turbulence: 0 };
 
@@ -68,28 +68,28 @@ export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTML
         paused: true,
         onStart: () => {
           if (lineHorizontalRef.current) {
-            lineHorizontalRef.current.style.filter = 'url(#filter-noise-x)';
+            lineHorizontalRef.current.style.filter = "url(#filter-noise-x)";
           }
           if (lineVerticalRef.current) {
-            lineVerticalRef.current.style.filter = 'url(#filter-noise-y)';
+            lineVerticalRef.current.style.filter = "url(#filter-noise-y)";
           }
         },
         onUpdate: () => {
           if (filterXRef.current && filterYRef.current) {
-            filterXRef.current.setAttribute('baseFrequency', primitiveValues.turbulence.toString());
-            filterYRef.current.setAttribute('baseFrequency', primitiveValues.turbulence.toString());
+            filterXRef.current.setAttribute("baseFrequency", primitiveValues.turbulence.toString());
+            filterYRef.current.setAttribute("baseFrequency", primitiveValues.turbulence.toString());
           }
         },
         onComplete: () => {
           if (lineHorizontalRef.current && lineVerticalRef.current) {
-            lineHorizontalRef.current.style.filter = 'none';
-            lineVerticalRef.current.style.filter = 'none';
+            lineHorizontalRef.current.style.filter = "none";
+            lineVerticalRef.current.style.filter = "none";
           }
         },
       })
       .to(primitiveValues, {
         duration: 0.5,
-        ease: 'power1',
+        ease: "power1",
         startAt: { turbulence: 1 },
         turbulence: 0,
       });
@@ -114,19 +114,19 @@ export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTML
       requestAnimationFrame(render);
     };
 
-    const links = containerRef.current.querySelectorAll('a');
+    const links = containerRef.current.querySelectorAll("a");
 
-    links.forEach(link => {
-      link.addEventListener('mouseenter', enter);
-      link.addEventListener('mouseleave', leave);
+    links.forEach((link) => {
+      link.addEventListener("mouseenter", enter);
+      link.addEventListener("mouseleave", leave);
     });
 
     return () => {
-      target.removeEventListener('mousemove', handleMouseMove);
-      target.removeEventListener('mousemove', onMouseMove);
-      links.forEach(link => {
-        link.removeEventListener('mouseenter', enter);
-        link.removeEventListener('mouseleave', leave);
+      target.removeEventListener("mousemove", handleMouseMove);
+      target.removeEventListener("mousemove", onMouseMove);
+      links.forEach((link) => {
+        link.removeEventListener("mouseenter", enter);
+        link.removeEventListener("mouseleave", leave);
       });
     };
   }, [containerRef]);
@@ -134,7 +134,7 @@ export function Crosshair({ containerRef }: { containerRef: React.RefObject<HTML
   return (
     <div
       ref={cursorRef}
-      className="cursor pointer-events-none absolute top-0 left-0 z-[10000] h-full w-full"
+      className="cursor pointer-events-none absolute top-0 left-0 z-10000 h-full w-full"
     >
       <svg className="absolute top-0 left-0 h-full w-full">
         <defs>

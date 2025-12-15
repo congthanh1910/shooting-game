@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { fetchImage } from '@/utils/fetch-image';
-import { runPromise } from '@/utils/run-promise';
+import { useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { fetchImage } from "@/utils/fetch-image";
+import { runPromise } from "@/utils/run-promise";
 
 export function StarterScreen() {
-  const [target, setTarget] = useState('');
+  const [target, setTarget] = useState("");
   const [input, getInputValue] = useInputElRef();
   async function handleImage() {
     const url = getInputValue();
@@ -32,9 +32,9 @@ export function StarterScreen() {
           Use
         </button>
       </div>
-      <Image src={target || '/tom-no-bg.png'} alt="target url" width={160} height={160} priority />
+      <Image src={target || "/tom-no-bg.png"} alt="target url" width={160} height={160} priority />
       <Link
-        href={{ pathname: '/play', query: queries }}
+        href={{ pathname: "/play", query: queries }}
         className="btn h-12 px-10 text-xl font-bold"
       >
         Start
@@ -47,7 +47,7 @@ function useInputElRef() {
   const ref = useRef<HTMLInputElement>(null);
   function getValue() {
     if (!ref.current) {
-      throw new Error('Can not access ref.current while rendering');
+      throw new Error("Can not access ref.current while rendering");
     }
     return ref.current.value;
   }
