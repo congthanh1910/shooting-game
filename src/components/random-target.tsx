@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import type { Nullable } from "@/types/utils";
 
 export function RandomTarget({
@@ -65,8 +64,9 @@ export function RandomTarget({
 }
 
 function useTargetUrl() {
-  const params = useSearchParams();
-  return params.get("target") || "/tom-no-bg.png";
+  // const params = useSearchParams();
+  // return params.get("target") || "/tom-no-bg.png";
+  return "/tom-no-bg.png";
 }
 
 const elementSize = { width: 400, height: 400 };
